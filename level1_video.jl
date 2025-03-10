@@ -22,7 +22,7 @@ ranarr = rand(4, 3, 3)
 println(ranarr)
 
 n = 0
-#push!(arr,n) #динамическая тепизация не работает в пуш, 
+#push!(arr,n) #динамическая типизация не работает в пуш, 
 println("/////////////////////")
 arr2 = []
 println(arr2)
@@ -117,7 +117,6 @@ xlabel!("X")
 ylabel!("Y")
 title!("y=x^2")
 #println("??????????")
-
 arr4 = rand(6)
 arr5 = rand(6)
 plot(arr4,arr5, legend=false)
@@ -127,23 +126,23 @@ p1 = plot(k,k)
 p2 = plot(k,k.^2)
 p3 = plot(k,k.^3)
 p4 = plot(k,k.^4)
-plot(p1,p2,p3,p4,layout=(2,2),legend=false)
+#plot(p1,p2,p3,p4,layout=(2,2),legend=false)
 #выводится только последний вызванный график
-import Base:+
-+(x::String, y::String) = string(x,y)
+#import Base:+
+#+(x::String, y::String) = string(x,y)
 
-"hello" + "world@S"
+#"hello" + "world@S"
 
 
-f4(x,y) = println("generous")
-f4(x::Int, y::Float64) = println("int+float64")
-f4(x::Float64, y::Float64) = println("float64+float64")
-f4(x::Int, y::Int) = println("int+int")
-f4(1,false)
+#f4(x,y) = println("generous")
+#f4(x::Int, y::Float64) = println("int+float64")
+#f4(x::Float64, y::Float64) = println("float64+float64")
+#f4(x::Int, y::Int) = println("int+int")
+#f4(1,false)
 
-a = rand(3,3)
-println(a)
-A = a'+a
-println(A)
+#a = rand(3,3)
+#println(a)
+#A = a'+a
+#println(A)
 # ну прикольно, но вот работа с типами и не очевидность вывода слегка напрягают
 #test push
