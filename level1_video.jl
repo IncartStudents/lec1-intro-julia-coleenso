@@ -111,7 +111,7 @@ f2(u) = u^2
 p = f2.(u)
 println(p)
 
-plot(u,p,label="line")
+pp = plot(u,p,label="line")
 scatter!(u,p, label="points")
 xlabel!("X")
 ylabel!("Y")
@@ -126,6 +126,10 @@ p1 = plot(k,k)
 p2 = plot(k,k.^2)
 p3 = plot(k,k.^3)
 p4 = plot(k,k.^4)
+
+#show(p1)
+#show(p2)
+#show(p3)
 #plot(p1,p2,p3,p4,layout=(2,2),legend=false)
 #выводится только последний вызванный график
 #import Base:+
