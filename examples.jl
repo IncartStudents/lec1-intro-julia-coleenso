@@ -28,7 +28,7 @@ ntuple.hex
 ntuple.str
 ntuple.num1 == ntuple[1]
 
-ntuple.str = "bye" # кортежи иммутабельны - их нельзя менять
+#ntuple.str = "bye" # кортежи иммутабельны - их нельзя менять
 
 ntuple2 = (ntuple..., str = "bye") # можно только создать новый
 
@@ -40,7 +40,7 @@ m = [1 2 3; 4 5 6; 7 8 9]
 m * v
 2 * v
 
-v * v # такое умножение отсутствует
+#v * v # такое умножение отсутствует
 v .* v # но можно указать поэлементное умножение
 v' * v
 
@@ -60,6 +60,7 @@ v = rand(1:5, 100)
 vv = [[1,2,3],[4,5,6],[7,8,9]]
 
 # гетерогенные массивы
+v =[]
 v = [1, 2.0, "hello", 0xFF] # чем отличаются от кортежей - динамический тип
 
 # строки и интерполяция в строку:
@@ -92,7 +93,7 @@ bar(10)
 bar("hello")
 
 bar.(v)
-
+println(bar.(m))
 bar.(m)
 
 # map
@@ -121,24 +122,27 @@ end
 
 # структуры
 
-struct Foo
+mutable struct Bar
+    a::Int
+    b::String
+end
+b = Bar(1, "qwerty")
+b.a = 2
+mutable struct Foo
     a::Int
     b::String
     c::Bar
 end
 
-mutable struct Bar
-    a::Int
-    b::String
-end
+println("!!!!!!!!!!!")
 
 # методы структуры
-
-f = Foo(1, "qwerty")
-f.a = 2 # структуры по умолчанию иммутабельны
-
 b = Bar(1, "qwerty")
 b.a = 2
+
+f = Foo(1, "qwerty", b)
+f.a = 2 # структуры по умолчанию иммутабельны
+print( "Foo -> $(f.a), $(f.b)")
 
 function Base.show(io::IO, f::Foo)
     print(io, "Foo -> $(f.a), $(f.b)")
@@ -147,9 +151,9 @@ end
 # массив структур
 
 vec_of_foo = [
-    Foo(1, "qwerty"),
-    Foo(2, "asdfgh"),
-    Foo(3, "zxcvb")
+    Foo(1, "qwerty",b),
+    Foo(2, "asdfgh",b),
+    Foo(3, "zxcvb",b)
 ]
 
 # словари (ключ - значение)
