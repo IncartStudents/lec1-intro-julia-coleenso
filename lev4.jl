@@ -1,41 +1,32 @@
 module Boids
+
 using Plots
 
 mutable struct Boid
-    position::Tuple{Float64,Float64}
-    velocity::Tuple{Float64,Float64}
+    position::Tuple{Float64, Float64}
+    velocity::Tuple{Float64, Float64}
 end
+
 mutable struct WorldState
     boids::Vector{Boid}
     width::Float64
     height::Float64
-    
 
-    function WorldState(n_boids::Int, width::Float64, height::Float64)
-        # TODO: добавить случайные позиции для n_boids птичек вместо одной
-
+    # Универсальный конструктор, который работает с Int64 и Float64
+    function WorldState(n_boids::Int, width, height)
+        width, height = Float64(width), Float64(height)  # Преобразование типов
         boids = [Boid((rand() * width, rand() * height), (rand() - 0.5, rand() - 0.5)) for _ in 1:n_boids]
-       # new(position, width, height)
         return new(boids, width, height)
     end
 end
 
+# Функция вычисления евклидова расстояния между двумя боидами
 function distance(b1::Boid, b2::Boid)
     return sqrt((b1.position[1] - b2.position[1])^2 + (b1.position[2] - b2.position[2])^2)
 end
 
+# Основная функция обновления боидов
 function update!(state::WorldState)
-   # state.boid = [Boid((x + randn() * 0.5, y + randn() * 0.5), (rand()-0.5, rand()-0.5)) for (x, y) in state.boid]
-   upda!(state::WorldState)
-   # new_boids = Boid[]
-   # state.boids = new_boids
-
-    # TODO: реализация уравнения движениcleaя птичек
-
-    return nothing
-end
-
-function upda!(state::WorldState)
     separation_factor = 0.2
     alignment_factor = 0.05
     cohesion_factor = 0.01
@@ -89,22 +80,21 @@ function upda!(state::WorldState)
     end
 
     state.boids = new_boids
-    
 end
 
+# Основной цикл анимации
 function (@main)(ARGS)
-    w::Float64 = 30
-    h::Float64 = 30
-    n_boids = 10
+    w, h = 100, 100
+    n_boids = 30
 
-    state = WorldState(n_boids, w, h)
+    state = WorldState(n_boids, w, h)  # Теперь ошибки не будет
 
-    anim = @animate for time = 1:100
+    anim = @animate for _ in 1:200
         update!(state)
-        # println(boids)
-        scatter([b.position[1] for b in state.boids], [b.position[2] for b in state.boids], xlim=(0, state.width), ylim=(0, state.height))
+        scatter([b.position[1] for b in state.boids], [b.position[2] for b in state.boids], xlim=(0, w), ylim=(0, h), legend=false)
     end
-    gif(anim, "boids.gif", fps=10)
+
+    gif(anim, "boids.gif", fps=20)
 end
 
 export main
